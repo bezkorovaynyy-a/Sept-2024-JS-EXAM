@@ -9,20 +9,28 @@ function checkInputValue(inputValue) {// Функція перевірки вв�
         const arrInputValue = inputValue.split('=');
         if (arrInputValue.length === 2 && arrInputValue[0] !== '' && arrInputValue[1] !== '') {// Введене значення коректне
             result = true;
-        }
-        else if (arrInputValue.length > 2) {// Присутньо більше одного знака '='
+        } else if (arrInputValue.length > 2) {// Присутньо більше одного знака '='
             addErrorMsg(`The separator '=' must be 1`);
-        }
-        else if (!inputValue.includes('=')) {// Пара не розділена знаком '='
+        } else if (!inputValue.includes('=')) {// Пара не розділена знаком '='
             addErrorMsg(`'Pare must be separated by the 1 '=' sign`);
-        }
-        else {// 'Name' або 'Value' пусті
+        } else {// 'Name' або 'Value' пусті
             addErrorMsg(`'Name' and 'Value' must not be empty`);
         }
     } else {// Введене значення містить недопустимі символи
         addErrorMsg(`Only letters, numbers and 1 '=' sign`);
     }
     return result;
+}
+
+function checkDoublePair(inputValue) {// Функція перевірки існування в списку ідентичної пари
+    const listElements = [...document.querySelectorAll('p')];
+    let double = 0;
+    for (let i = 0; i < listElements.length; i++) {
+        if (listElements[i].innerText === inputValue) {
+            double++;
+        }
+    }
+    return double;
 }
 
 function addErrorMsg(errorText) {// Функція створення повідомлення про помилку
@@ -62,9 +70,15 @@ btnAdd.onclick = function () {
         if (correctInputValue === true) {
             let arrNameValue = inputValue.split('=');
             inputValue = `${arrNameValue[0].trim()}=${arrNameValue[1].trim()}`;
-            addElementToList(inputValue);
-            input.value = '';
-            input.focus();
+            let doublePair = checkDoublePair(inputValue);
+            if (doublePair === 0) {
+                addElementToList(inputValue);
+                input.value = '';
+                input.focus();
+            } else {
+                input.classList.add('is-invalid');
+                addErrorMsg('This combination is already in the list');
+            }
         }
     }
 }
