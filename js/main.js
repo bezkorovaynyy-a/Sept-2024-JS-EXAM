@@ -103,17 +103,16 @@ for (let i = 0; i < sortButtons.length; i++) {
         } else {
             const directionSort = +this.value;
             listElements.sort((a, b) => {
-                if (a.innerText.split('=')[directionSort] > b.innerText.split('=')[directionSort]) {
+                if (b.innerText.split('=')[directionSort] > a.innerText.split('=')[directionSort]) {
                     return 1;
                 }
-                if (a.innerText.split('=')[directionSort] < b.innerText.split('=')[directionSort]) {
+                if (b.innerText.split('=')[directionSort] < a.innerText.split('=')[directionSort]) {
                     return -1;
                 }
-                if (a.innerText.split('=')[directionSort] === b.innerText.split('=')[directionSort]) {
+                if (b.innerText.split('=')[directionSort] === a.innerText.split('=')[directionSort]) {
                     return 0;
                 }
             });
-            listElements.reverse();
             list.innerHTML = '';
             for (let i = 0; i < listElements.length; i++) {
                 addElementToList(listElements[i].innerText);
