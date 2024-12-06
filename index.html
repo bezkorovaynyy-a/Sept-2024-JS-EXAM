@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sept-2024 JS EXAM</title>
+    <link rel="stylesheet" href="css/rest.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style-mobile.css">
+</head>
+<body class="d-flex">
+<div class="main-container d-flex jc-center fd-column gap-20">
+    <h1>Test</h1>
+    <div>
+        <h5>Name/Value Pair</h5>
+        <div class="input-container d-grid gap-20">
+            <label for="input">
+                <input id="input" type="text" placeholder="Name=Value">
+            </label>
+            <button id="btnAdd">Add</button>
+        </div>
+    </div>
+    <div class="list-container d-grid gap-20">
+        <div>
+            <h5>Name/Value Pair List</h5>
+            <div id="list" class="list"></div>
+        </div>
+        <div class="list-buttons d-flex fd-column js-flex-start gap-10">
+            <button name="sort" value="0">Sort By Name</button>
+            <button name="sort" value="1">Sort By Value</button>
+            <button id="btnDel">Delete</button>
+        </div>
+    </div>
+</div>
+<script src="js/main.js"></script>
+</body>
+</html>

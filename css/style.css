@@ -1,0 +1,103 @@
+body {
+    background-color: #638EBB;
+}
+
+.d-grid {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.jc-center {
+    justify-content: center;
+}
+
+.fd-column {
+    flex-direction: column;
+}
+
+.jc-flex-start {
+    justify-content: flex-start;
+}
+
+.gap-10 {
+    gap: 10px;
+}
+
+.gap-20 {
+    gap: 20px;
+}
+
+.main-container {
+    position: relative;
+    margin: auto;
+    border-radius: 2px;
+    background-color: white;
+    padding: 30px 20px 20px 20px;
+}
+
+h5 {
+    color: grey;
+    font-size: 0.8em;
+    font-weight: normal;
+}
+
+.mark {
+    background-color: #638EBB;
+    color: white;
+}
+
+input {
+    width: 100%;
+    padding: 0 2px;
+}
+
+input:active, :hover, :focus {
+    outline: 0;
+    outline-offset: 0;
+}
+
+button {
+    width: fit-content;
+    padding: 0 5px;
+    cursor: pointer;
+}
+
+.list-container {
+    height: 100%;
+}
+
+.list {
+    width: 100%;
+    height: 200px;
+    overflow: auto;
+    border: solid 1px grey;
+    border-radius: 2px;
+}
+
+.list-buttons {
+    margin-top: 15px;
+}
+
+.list-buttons > button:nth-child(3) {
+    margin-top: 10px;
+}
+
+.is-invalid {
+    border: solid 1px red;
+}
+
+.error-msg {
+    position: absolute;
+    top: 5px;
+    color: red;
+    font-size: 0.9em;
+}
+
+p{
+    cursor: pointer;
+    padding: 1px 2px;
+}
