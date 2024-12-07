@@ -62,20 +62,16 @@ btnAdd.onclick = function () {
     if (inputValue === '') {
         input.classList.add('is-invalid');
         addErrorMsg('This field is required');
-    } else {
-        let correctInputValue = checkInputValue(inputValue);
-        if (correctInputValue) {
-            let arrNameValue = inputValue.split('=');
-            inputValue = `${arrNameValue[0].trim()}=${arrNameValue[1].trim()}`;
-            let doublePair = checkDoublePair(inputValue);
-            if (doublePair === 0) {
-                addElementToList(inputValue);
-                input.value = '';
-                input.focus();
-            } else {
-                input.classList.add('is-invalid');
-                addErrorMsg('This combination is already in the list');
-            }
+    } else if (checkInputValue(inputValue)) {
+        let arrNameValue = inputValue.split('=');
+        inputValue = `${arrNameValue[0].trim()}=${arrNameValue[1].trim()}`;
+        if (checkDoublePair(inputValue) === 0) {
+            addElementToList(inputValue);
+            input.value = '';
+            input.focus();
+        } else {
+            input.classList.add('is-invalid');
+            addErrorMsg('This combination is already in the list');
         }
     }
 }
@@ -112,15 +108,14 @@ for (let i = 0; i < sortButtons.length; i++) {
         } else if (listElements.length === 1) {
             addErrorMsg('There is only 1 element in the list');
         } else {
-            const directionSort = +this.value;
             listElements.sort((a, b) => {
-                if (b.innerText.split('=')[directionSort] > a.innerText.split('=')[directionSort]) {
+                if (b.innerText.split('=')[+this.value] > a.innerText.split('=')[+this.value]) {
                     return 1;
                 }
-                if (b.innerText.split('=')[directionSort] < a.innerText.split('=')[directionSort]) {
+                if (b.innerText.split('=')[+this.value] < a.innerText.split('=')[+this.value]) {
                     return -1;
                 }
-                if (b.innerText.split('=')[directionSort] === a.innerText.split('=')[directionSort]) {
+                if (b.innerText.split('=')[+this.value] === a.innerText.split('=')[+this.value]) {
                     return 0;
                 }
             });
