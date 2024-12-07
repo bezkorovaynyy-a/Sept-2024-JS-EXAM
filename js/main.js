@@ -10,7 +10,7 @@ function checkInputValue(inputValue) {// Функція перевірки вв�
         } else if (arrInputValue.length > 2) {// Присутньо більше одного знака '='
             addErrorMsg(`The separator '=' must be 1`);
         } else if (!inputValue.includes('=')) {// Пара не розділена знаком '='
-            addErrorMsg(`'Pare must be separated by the 1 '=' sign`);
+            addErrorMsg(`'Pare' must be separated by the 1 '=' sign`);
         } else {// 'Name' або 'Value' пусті
             addErrorMsg(`'Name' and 'Value' must not be empty`);
         }
