@@ -2,13 +2,11 @@ const input = document.getElementById('input');// Поле введення да
 const list = document.getElementById('list');// Блок для формування списку
 
 function checkInputValue(inputValue) {// Функція перевірки введених даних на їх коректність
-    let result = false;
     const regex = /^[A-Za-zА-Яа-яґҐЁёІіЇїЄє0-9 =]+$/;// Пара значень має містити тільки букви, цифри та знак 1 '='. Тяжко з цим(((
-    const isValid = regex.test(inputValue);
-    if (isValid) {
+    if (regex.test(inputValue)) {
         const arrInputValue = inputValue.split('=');
         if (arrInputValue.length === 2 && arrInputValue[0] !== '' && arrInputValue[1] !== '') {// Введене значення коректне
-            result = true;
+            return true;
         } else if (arrInputValue.length > 2) {// Присутньо більше одного знака '='
             addErrorMsg(`The separator '=' must be 1`);
         } else if (!inputValue.includes('=')) {// Пара не розділена знаком '='
@@ -19,7 +17,6 @@ function checkInputValue(inputValue) {// Функція перевірки вв�
     } else {// Введене значення містить недопустимі символи
         addErrorMsg(`Only letters, numbers and 1 '=' sign`);
     }
-    return result;
 }
 
 function checkDoublePair(inputValue) {// Функція перевірки існування в списку ідентичної пари
@@ -67,7 +64,7 @@ btnAdd.onclick = function () {
         addErrorMsg('This field is required');
     } else {
         let correctInputValue = checkInputValue(inputValue);
-        if (correctInputValue === true) {
+        if (correctInputValue) {
             let arrNameValue = inputValue.split('=');
             inputValue = `${arrNameValue[0].trim()}=${arrNameValue[1].trim()}`;
             let doublePair = checkDoublePair(inputValue);
