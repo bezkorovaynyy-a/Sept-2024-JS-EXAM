@@ -11,24 +11,21 @@ addEventListener("keydown", (event) => {
 });
 
 function checkInputValue(inputValue) {// Функція перевірки введених даних на їх коректність
-    const regex = /^[А-яA-zґҐЁёІіЇїЄє0-9 =]+$/;// Пара значень має містити тільки букви, цифри, пробіли та знак '='
+    const regex = /^[А-яA-zґҐЁёІіЇїЄє0-9 =]+$/;// Введене значення має містити тільки букви, цифри, пробіли та знак '='
     if (regex.test(inputValue)) {
-        const arrInputValue = inputValue.split('=');
-        if (arrInputValue[0] === ' ' || arrInputValue[0] === undefined || arrInputValue[1] === ' ' || arrInputValue[1] === undefined) {// Намагання відправити одні пробіли
-            addErrorMsg(`'Name' and 'Value' must not be empty`);
-        }
-        else {
+        if (inputValue.includes('=')) {
+            const arrInputValue = inputValue.split('=');
             arrInputValue[0] = arrInputValue[0].trim();
             arrInputValue[1] = arrInputValue[1].trim();
             if (arrInputValue.length === 2 && arrInputValue[0] !== '' && arrInputValue[1] !== '') {// Введене значення коректне
                 return arrInputValue.join('=');
-            } else if (arrInputValue.length > 2) {// Присутньо більше одного знака '='
+            } else if (arrInputValue.length > 2) {// Введене значення містить більше одного знака '='
                 addErrorMsg(`The separator '=' must be 1`);
-            } else if (!inputValue.includes('=')) {// Пара не розділена знаком '='
-                addErrorMsg(`'Pare' must be separated by the 1 '=' sign`);
             } else {// 'Name' або 'Value' пусті
                 addErrorMsg(`'Name' and 'Value' must not be empty`);
             }
+        } else {// Введене значення не містить знака '='
+            addErrorMsg(`'Pare' must be separated by the sign'='`);
         }
     } else {// Введене значення містить недопустимі символи
         addErrorMsg(`Only letters, numbers, space and 1 '=' sign`);
