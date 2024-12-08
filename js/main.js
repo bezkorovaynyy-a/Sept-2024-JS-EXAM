@@ -9,7 +9,7 @@ function checkInputValue(inputValue) {// Функція перевірки вв�
     if (regex.test(inputValue)) {
         const arrInputValue = inputValue.split('=');
         if (arrInputValue.length === 2 && arrInputValue[0] !== '' && arrInputValue[1] !== '') {// Введене значення коректне
-            return true;
+            return `${arrInputValue[0].trim()}=${arrInputValue[1].trim()}`;// Повертаємо очищене значення пари
         } else if (arrInputValue.length > 2) {// Присутньо більше одного знака '='
             addErrorMsg(`The separator '=' must be 1`);
         } else if (!inputValue.includes('=')) {// Пара не розділена знаком '='
@@ -59,19 +59,20 @@ function addElementToList(content) {// Функція додавання еле�
 
 btnAdd.onclick = function () {// Подія на кнопку додавання пари значень в список
     checkErrorMsg();
-    let inputValue = input.value.trim();
+    let inputValue = input.value.replace(/\s+/g, ' ');
     if (inputValue === '') {// Якщо в поле для введення нічого зовсім не ввели
         input.classList.add('is-invalid');
         addErrorMsg('This field is required');
-    } else if (checkInputValue(inputValue)) {// Якщо введене значення відповідає вимогам намагаємось додати до списку
-        let arrNameValue = inputValue.split('=');
-        inputValue = `${arrNameValue[0].trim()}=${arrNameValue[1].trim()}`;
-        if (checkDoublePair(inputValue) === 0) {// Перевірка на відсутність у списку аналогічної пари
-            addElementToList(inputValue);
-            input.value = '';
-            input.focus();
-        } else {
-            addErrorMsg('This combination is already in the list');
+    } else {
+        const cleanInputValue = checkInputValue(inputValue);
+        if (cleanInputValue) {// Якщо введене значення відповідає вимогам намагаємось додати до списку
+            if (checkDoublePair(cleanInputValue) === 0) {// Перевірка на відсутність у списку аналогічної пари
+                addElementToList(cleanInputValue);
+                input.value = '';
+                input.focus();
+            } else {
+                addErrorMsg('This combination is already in the list');
+            }
         }
     }
 }
