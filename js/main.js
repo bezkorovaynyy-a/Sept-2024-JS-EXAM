@@ -5,7 +5,7 @@ const btnDel = document.getElementById('btnDel');// Кнопка видален�
 const sortButtons = document.getElementsByName('sort');// Кнопки сортування
 
 function checkInputValue(inputValue) {// Функція перевірки введених даних на їх коректність
-    const regex = /^[A-Za-zА-Яа-яґҐЁёІіЇїЄє0-9 =]+$/;// Пара значень має містити тільки букви, цифри та знак 1 '='. Тяжко з цим(((
+    const regex = /^[А-яA-zґҐЁёІіЇїЄє0-9 =]+$/;// Пара значень має містити тільки букви, цифри та знак 1 '='
     if (regex.test(inputValue)) {
         const arrInputValue = inputValue.split('=');
         if (arrInputValue.length === 2 && arrInputValue[0] !== '' && arrInputValue[1] !== '') {// Введене значення коректне
