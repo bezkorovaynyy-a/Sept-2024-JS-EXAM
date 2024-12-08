@@ -8,8 +8,10 @@ function checkInputValue(inputValue) {// Функція перевірки вв�
     const regex = /^[А-яA-zґҐЁёІіЇїЄє0-9 =]+$/;// Пара значень має містити тільки букви, цифри, пробіли та знак '='
     if (regex.test(inputValue)) {
         const arrInputValue = inputValue.split('=');
+        arrInputValue[0] = arrInputValue[0].trim();
+        arrInputValue[1] = arrInputValue[1].trim();
         if (arrInputValue.length === 2 && arrInputValue[0] !== '' && arrInputValue[1] !== '') {// Введене значення коректне
-            return `${arrInputValue[0].trim()}=${arrInputValue[1].trim()}`;// Повертаємо очищене значення пари
+            return arrInputValue.join('=');
         } else if (arrInputValue.length > 2) {// Присутньо більше одного знака '='
             addErrorMsg(`The separator '=' must be 1`);
         } else if (!inputValue.includes('=')) {// Пара не розділена знаком '='
