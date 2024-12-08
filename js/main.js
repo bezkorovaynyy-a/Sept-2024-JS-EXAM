@@ -14,7 +14,7 @@ function checkInputValue(inputValue) {// Функція перевірки вв�
     const regex = /^[А-яA-zґҐЁёІіЇїЄє0-9 =]+$/;// Пара значень має містити тільки букви, цифри, пробіли та знак '='
     if (regex.test(inputValue)) {
         const arrInputValue = inputValue.split('=');
-        if (arrInputValue[0] === ' ' || arrInputValue[0] === undefined || arrInputValue[1] === '' || arrInputValue[1] === undefined) {// Намагання відправити одні пробіли
+        if (arrInputValue[0] === ' ' || arrInputValue[0] === undefined || arrInputValue[1] === ' ' || arrInputValue[1] === undefined) {// Намагання відправити одні пробіли
             addErrorMsg(`'Name' and 'Value' must not be empty`);
         }
         else {
