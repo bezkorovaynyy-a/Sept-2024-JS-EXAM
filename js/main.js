@@ -4,20 +4,31 @@ const btnAdd = document.getElementById('btnAdd');// Кнопка додаван�
 const btnDel = document.getElementById('btnDel');// Кнопка видалення елементів зі списку
 const sortButtons = document.getElementsByName('sort');// Кнопки сортування
 
+addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && input.value !== '') {
+        btnAdd.click();
+    }
+});
+
 function checkInputValue(inputValue) {// Функція перевірки введених даних на їх коректність
     const regex = /^[А-яA-zґҐЁёІіЇїЄє0-9 =]+$/;// Пара значень має містити тільки букви, цифри, пробіли та знак '='
     if (regex.test(inputValue)) {
         const arrInputValue = inputValue.split('=');
-        arrInputValue[0] = arrInputValue[0].trim();
-        arrInputValue[1] = arrInputValue[1].trim();
-        if (arrInputValue.length === 2 && arrInputValue[0] !== '' && arrInputValue[1] !== '') {// Введене значення коректне
-            return arrInputValue.join('=');
-        } else if (arrInputValue.length > 2) {// Присутньо більше одного знака '='
-            addErrorMsg(`The separator '=' must be 1`);
-        } else if (!inputValue.includes('=')) {// Пара не розділена знаком '='
-            addErrorMsg(`'Pare' must be separated by the 1 '=' sign`);
-        } else {// 'Name' або 'Value' пусті
+        if (arrInputValue[0] === ' ' || arrInputValue[0] === undefined || arrInputValue[1] === '' || arrInputValue[1] === undefined) {// Намагання відправити одні пробіли
             addErrorMsg(`'Name' and 'Value' must not be empty`);
+        }
+        else {
+            arrInputValue[0] = arrInputValue[0].trim();
+            arrInputValue[1] = arrInputValue[1].trim();
+            if (arrInputValue.length === 2 && arrInputValue[0] !== '' && arrInputValue[1] !== '') {// Введене значення коректне
+                return arrInputValue.join('=');
+            } else if (arrInputValue.length > 2) {// Присутньо більше одного знака '='
+                addErrorMsg(`The separator '=' must be 1`);
+            } else if (!inputValue.includes('=')) {// Пара не розділена знаком '='
+                addErrorMsg(`'Pare' must be separated by the 1 '=' sign`);
+            } else {// 'Name' або 'Value' пусті
+                addErrorMsg(`'Name' and 'Value' must not be empty`);
+            }
         }
     } else {// Введене значення містить недопустимі символи
         addErrorMsg(`Only letters, numbers, space and 1 '=' sign`);
