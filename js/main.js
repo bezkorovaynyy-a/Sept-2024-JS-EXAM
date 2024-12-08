@@ -1,5 +1,8 @@
 const input = document.getElementById('input');// Поле введення даних
 const list = document.getElementById('list');// Блок для формування списку
+const btnAdd = document.getElementById('btnAdd');// Кнопка додавання пари значень в список
+const btnDel = document.getElementById('btnDel');// Кнопка видалення елементів зі списку
+const sortButtons = document.getElementsByName('sort');// Кнопки сортування
 
 function checkInputValue(inputValue) {// Функція перевірки введених даних на їх коректність
     const regex = /^[A-Za-zА-Яа-яґҐЁёІіЇїЄє0-9 =]+$/;// Пара значень має містити тільки букви, цифри та знак 1 '='. Тяжко з цим(((
@@ -39,10 +42,9 @@ function addErrorMsg(errorText) {// Функція створення повід
 
 function checkErrorMsg() {// Функція перевірки повідомлення про помилку та видалення якщо дані вірні
     const errorMsgElement = document.getElementsByClassName('error-msg')[0];
-    if (errorMsgElement) {
+    if (errorMsgElement) {// Якщо є повідомлення про помилку - видаляємо його та видаляємо клас з поля введення або зі списку
         errorMsgElement.remove();
-        input.classList.remove('is-invalid');
-        list.classList.remove('is-invalid');
+        input.classList.contains('is-invalid') ? input.classList.remove('is-invalid') : (list.classList.contains('is-invalid') ? list.classList.remove('is-invalid') : '');
     }
 }
 
@@ -50,76 +52,73 @@ function addElementToList(content) {// Функція додавання еле�
     const newElementList = document.createElement('p');
     newElementList.textContent = content;
     list.prepend(newElementList);
-    newElementList.onclick = function () {// Функція вибору елементів для видалення зі списку
+    newElementList.onclick = function () {// Подія виділення/зняття виділення елементів для видалення зі списку
         this.classList.contains('mark') ? this.classList.remove('mark') : this.classList.add('mark');
     }
 }
 
-const btnAdd = document.getElementById('btnAdd');// Подія на кнопку додавання пари значень в список
-btnAdd.onclick = function () {
+btnAdd.onclick = function () {// Подія на кнопку додавання пари значень в список
     checkErrorMsg();
     let inputValue = input.value.trim();
-    if (inputValue === '') {
+    if (inputValue === '') {// Якщо в поле для введення нічого зовсім не ввели
         input.classList.add('is-invalid');
         addErrorMsg('This field is required');
-    } else if (checkInputValue(inputValue)) {
+    } else if (checkInputValue(inputValue)) {// Якщо введене значення відповідає вимогам намагаємось додати до списку
         let arrNameValue = inputValue.split('=');
         inputValue = `${arrNameValue[0].trim()}=${arrNameValue[1].trim()}`;
-        if (checkDoublePair(inputValue) === 0) {
+        if (checkDoublePair(inputValue) === 0) {// Перевірка на відсутність у списку аналогічної пари
             addElementToList(inputValue);
             input.value = '';
             input.focus();
         } else {
-            input.classList.add('is-invalid');
             addErrorMsg('This combination is already in the list');
         }
     }
 }
 
-const btnDel = document.getElementById('btnDel');// Подія на кнопку видалення елементів зі списку
-btnDel.onclick = function () {
+btnDel.onclick = function () {// Подія на кнопку видалення елементів зі списку
     checkErrorMsg();
     const listElements = document.querySelectorAll('p');
-    if (listElements.length === 0) {
+    if (listElements.length === 0) {// Перевірка на наявність елементів у списку
         list.classList.add('is-invalid');
         addErrorMsg('The list contains no elements');
     } else {
         let counterSelectedElements = 0;
-        for (let i = 0; i < listElements.length; i++) {
+        for (let i = 0; i < listElements.length; i++) {// Шукаємо відмічені елементи та видаляємо
             if (listElements[i].classList.contains('mark')) {
                 listElements[i].remove();
                 counterSelectedElements++;
             }
         }
-        if (counterSelectedElements === 0) {
+        if (counterSelectedElements === 0) {// Перевірка на наявність відмічених елементів для видалення
             list.classList.add('is-invalid');
             addErrorMsg('Mark (click) item(s) to be deleted');
         }
     }
 }
 
-const sortButtons = document.getElementsByName('sort');// Подія на кнопки сортування
-for (let i = 0; i < sortButtons.length; i++) {
+for (let i = 0; i < sortButtons.length; i++) {// Подія на кнопки сортування
     sortButtons[i].onclick = function () {
         checkErrorMsg();
         const listElements = [...document.querySelectorAll('p')];
-        if (listElements.length === 0) {
+        if (listElements.length === 0) {// Перевірка на наявність елементів у списку
             addErrorMsg('There are no items in the list to sort');
-        } else if (listElements.length === 1) {
+        } else if (listElements.length === 1) {// Якщо у списку тільки 1 елемент немає що сортувати
             addErrorMsg('There is only 1 element in the list');
         } else {
-            listElements.sort((a, b) => {
-                if (b.innerText.split('=')[+this.value] > a.innerText.split('=')[+this.value]) {
+            const paramSort = +this.value;
+            listElements.sort((a, b) => {// Сортуємо елементи по параметру зі значення натиснутої кнопки
+                if (b.innerText.split('=')[paramSort] > a.innerText.split('=')[paramSort]) {
                     return 1;
                 }
-                if (b.innerText.split('=')[+this.value] < a.innerText.split('=')[+this.value]) {
+                if (b.innerText.split('=')[paramSort] < a.innerText.split('=')[paramSort]) {
                     return -1;
                 }
-                if (b.innerText.split('=')[+this.value] === a.innerText.split('=')[+this.value]) {
+                if (b.innerText.split('=')[paramSort] === a.innerText.split('=')[paramSort]) {
                     return 0;
                 }
             });
-            list.innerHTML = '';
+            list.innerHTML = '';// Очищаємо список та формуємо його відсортованим
             for (let i = 0; i < listElements.length; i++) {
                 addElementToList(listElements[i].innerText);
             }

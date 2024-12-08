@@ -7,6 +7,9 @@
 html, body {
     height: 100%;
     font-family: Arial, sans-serif;
+}
+
+body {
     background-color: #638EBB;
 }
 
