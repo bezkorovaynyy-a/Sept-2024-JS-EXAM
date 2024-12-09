@@ -15,8 +15,8 @@ function checkInputValue(inputValue) {// Функція перевірки вв�
     if (regex.test(inputValue)) {
         if (inputValue.includes('=')) {
             const arrInputValue = inputValue.split('=');
-            arrInputValue[0] = arrInputValue[0].trim();
-            arrInputValue[1] = arrInputValue[1].trim();
+            arrInputValue[0] = arrInputValue[0].trim();// Зайве якщо Name та Value не повинні зовсім містити пробілів
+            arrInputValue[1] = arrInputValue[1].trim();// Зайве якщо Name та Value не повинні зовсім містити пробілів
             if (arrInputValue.length === 2 && arrInputValue[0] !== '' && arrInputValue[1] !== '') {// Введене значення коректне
                 return arrInputValue.join('=');
             } else if (arrInputValue.length > 2) {// Введене значення містить більше одного знака '='
@@ -69,7 +69,7 @@ function addElementToList(content) {// Функція додавання еле�
 
 btnAdd.onclick = function () {// Подія на кнопку додавання пари значень в список
     checkErrorMsg();
-    let inputValue = input.value.replace(/\s+/g, ' ');
+    let inputValue = input.value.replace(/\s+/g, ' ');//.replaceAll(/\s+/g, ''); - Якщо Name та Value не повинні зовсім містити пробілів
     if (inputValue === '') {// Якщо в поле для введення нічого зовсім не ввели
         input.classList.add('is-invalid');
         addErrorMsg('This field is required');
